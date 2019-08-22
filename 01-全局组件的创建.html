@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 1.引入js文件 -->
+    <script src="./js/vue2.js"></script>
+    <link rel="stylesheet" href="./styles/animate.css">
+    <style>
+        .first {
+            color: Red
+        }
+
+        .second {
+            color: blue
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 4.添加模板区域 -->
+    <div id='app'>
+        <!-- 5.使用插值表达式展示数据 -->
+        <p>{{msg}}</p>
+        <input type="text" name="" id="" v-focus v-setcolor='"yellow"'>
+        <input type="button" value="我也来获取this" @click='getthis'>
+    </div>
+
+    <!-- 创建组件的模板 -->
+    <template id='aa'>
+        <div>这是我的第一个组件</div>
+    </template>
+
+    <Script>
+
+        // 注册一个全局自定义指令 `v-focus`
+        Vue.directive('focus', {
+            // 当被绑定的元素插入到 DOM 中时……
+            inserted: function (el) {
+                // 聚焦元素
+                el.focus()
+            }
+        })
+        Vue.directive('setcolor', {
+            inserted(el, binding) {
+                el.style.color = binding.value
+            }
+        })
+
+        // 创建组件
+        var second = {
+            template: ''
+        }
+
+        var obj = {}
+        // 创建第一个全局组件
+        // myfirst:组件对象，以后路由配置时需要使用
+        // first：组件名称，使用的时候就是使用名称
+        var myfirst = Vue.component('first', {
+            template: `<div class="first">
+                        这是我的第一个组件，
+                        名字叫：{{myname}}<h1>我是h1</h1>
+                      </div>`,
+            // template:'#aa'
+            data() {
+                return {
+                    myname: 'jack'
+                }
+            },
+            directives: {}
+        })
+
+        // 2.创建vue实例    
+        var vm = new Vue({
+            // 3.添加常用配置
+            el: '#app',
+            data: {
+                msg: 'hello vue',
+                aabb(){
+                    console.log('aabb')
+                }
+            },
+            directives: {
+
+            },
+            methods:{
+                getthis() {
+                    console.log(123);
+                    console.log(this);
+                }
+            }
+        })
+    </Script>
+</body>
+
+</html>
